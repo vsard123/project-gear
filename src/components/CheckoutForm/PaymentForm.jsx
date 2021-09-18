@@ -1,14 +1,6 @@
 import React from "react";
-import {
-  Elements,
-  CardElement,
-  ElementsConsumer,
-} from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import Review from "./Review";
 import { Button, Divider, Typography } from "@material-ui/core";
-
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const PaymentForm = ({
   checkoutToken,
@@ -18,44 +10,55 @@ const PaymentForm = ({
   nextStep,
   timeout,
 }) => {
-  const handleSubmit = async (event, elements, stripe) => {
-    event.preventDefault();
-    if (!stripe || !elements) return;
-    const cardElement = elements.getElement(CardElement);
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-    });
-    if (error) {
-      console.log(error);
-    } else {
-      const orderData = {
-        line_items: checkoutToken.live.line_items,
-        customer: {
-          firstname: shippingData.firstName,
-          lastname: shippingData.lastName,
-          email: shippingData.email,
-        },
-        shipping: {
-          name: "Primary",
-          street: shippingData.address1,
-          town_city: shippingData.city,
-          county_state: shippingData.shippingSubdivision,
-          postal_zip_code: shippingData.zip,
-          country: shippingData.shippingCountry,
-        },
-        fulfillment: { shipping_method: shippingData.shippingOption },
-        payment: {
-          gateway: "stripe",
-          stripe: {
-            payment_method_id: paymentMethod.id,
-          },
+  const getLineItems = (checkoutToken) => {
+    const line_items = [];
+    for (let i = 0; i < checkoutToken.live.line_items.length; i++) {
+      const item = {
+        name: {
+          quantity: checkoutToken.live.line_items[i].quantity,
+          variant: checkoutToken.live.line_items[i].variant,
         },
       };
-      onCaptureCheckout(checkoutToken.id, orderData);
-      timeout();
-      nextStep();
+      const string = checkoutToken.live.line_items[i].id;
+      item[string] = item["name"];
+      delete item["name"];
+      line_items.push(item);
     }
+    return line_items[0];
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const orderData = {
+      line_items: getLineItems(checkoutToken),
+      customer: {
+        firstname: shippingData.firstName,
+        lastname: shippingData.lastName,
+        email: shippingData.email,
+      },
+      shipping: {
+        name: "Primary",
+        street: shippingData.address1,
+        town_city: shippingData.city,
+        county_state: shippingData.shippingSubdivision,
+        postal_zip_code: shippingData.zip,
+        country: shippingData.shippingCountry,
+      },
+      fulfillment: { shipping_method: shippingData.shippingOption },
+      payment: {
+        gateway: "test_gateway",
+        card: {
+          number: "4242 4242 4242 4242",
+          expiry_month: "01",
+          expiry_year: "2023",
+          cvc: "123",
+          postal_zip_code: "94103",
+        },
+      },
+    };
+    onCaptureCheckout(checkoutToken.id, orderData);
+    timeout();
+    nextStep();
   };
 
   return (
@@ -65,29 +68,17 @@ const PaymentForm = ({
       <Typography variant="h6" gutterBottom style={{ margin: "20px 0" }}>
         Payment Method
       </Typography>
-      <Elements stripe={stripePromise}>
-        <ElementsConsumer>
-          {({ elements, stripe }) => (
-            <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
-              <CardElement />
-              <br />
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Button variant="outlined" onClick={backStep}>
-                  Back
-                </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  disabled={!stripe}
-                  color="primary"
-                >
-                  Pay {checkoutToken.live.subtotal.formatted_with_symbol}
-                </Button>
-              </div>
-            </form>
-          )}
-        </ElementsConsumer>
-      </Elements>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <br />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button variant="outlined" onClick={backStep}>
+            Back
+          </Button>
+          <Button type="submit" variant="contained" color="primary">
+            Pay {checkoutToken.live.subtotal.formatted_with_symbol}
+          </Button>
+        </div>
+      </form>
     </>
   );
 };

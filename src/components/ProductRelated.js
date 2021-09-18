@@ -4,7 +4,7 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 import { Link } from "react-router-dom";
 
-const ProductRelated = ({ product }) => {
+const ProductRelated = ({ product, handleAddCart }) => {
   return (
     <div className="card align-content-center">
       <Link to={`/san-pham/${product.id}`}>
@@ -37,6 +37,7 @@ const ProductRelated = ({ product }) => {
             color="primary"
             aria-label="add to shopping cart"
             className="btn-add-cart"
+            onClick={() => handleAddCart(product.id, 1)}
           >
             <AddShoppingCartIcon />
           </IconButton>

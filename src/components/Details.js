@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouteMatch } from "react-router";
 import { commerce } from "../utils/commerce";
 import BreadCrumbs from "./Bread_Crumb";
@@ -8,9 +8,25 @@ import Loading from "./Loading";
 import ProductRelated from "./ProductRelated";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { DataContext } from "../store/GlobalState";
 
 const Details = () => {
   const id = useRouteMatch().params.id;
+
+  const { dispatch } = useContext(DataContext);
+
+  const handleAddCart = async (product_id, quantity) => {
+    dispatch({
+      type: "NOTIFY",
+      payload: { success: "Thêm vào giỏ hàng thành công" },
+    });
+    await commerce.cart.add(product_id, quantity).then((item) => {
+      dispatch({
+        type: "ADD_CART",
+        payload: item.cart,
+      });
+    });
+  };
 
   const [product, setProduct] = useState({});
   const fetchProducts = async () => {
@@ -67,6 +83,7 @@ const Details = () => {
                   <button
                     type="button"
                     className="btn btn-danger d-block mt-3 px-5 py-2 w-100"
+                    onClick={() => handleAddCart(product.id, 1)}
                   >
                     Đặt hàng
                   </button>
@@ -114,7 +131,11 @@ const Details = () => {
                 </div>
                 <div className="products py-3">
                   {product.related_products.map((product) => (
-                    <ProductRelated key={product.id} product={product} />
+                    <ProductRelated
+                      key={product.id}
+                      product={product}
+                      handleAddCart={handleAddCart}
+                    />
                   ))}
                 </div>
               </div>

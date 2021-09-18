@@ -10,8 +10,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
+import DrawerMenu from "./DrawerMenu";
 
 import { DataContext } from "../store/GlobalState";
+import { Divider, Drawer, Hidden } from "@material-ui/core";
 
 const drawerWidth = 240;
 
@@ -103,11 +105,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar(props) {
+  const { window } = props;
   const { state } = useContext(DataContext);
   const { cart } = state;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const classes = useStyles();
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <div>
+      <div className={classes.toolbar} />
+      <Divider />
+      <DrawerMenu />
+    </div>
+  );
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div className={classes.grow}>
@@ -123,6 +142,7 @@ export default function Navbar() {
               className={classes.menuButton}
               color="inherit"
               aria-label="open drawer"
+              onClick={handleDrawerToggle}
             >
               <MenuIcon />
             </IconButton>
@@ -174,6 +194,26 @@ export default function Navbar() {
           </Toolbar>
         </Container>
       </AppBar>
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor="left"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+      </nav>
     </div>
   );
 }
