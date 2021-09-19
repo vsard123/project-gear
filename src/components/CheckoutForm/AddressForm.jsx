@@ -87,14 +87,14 @@ const AddressForm = ({ checkoutToken, next }) => {
           )}
         >
           <Grid container spacing={3}>
-            <FormInput required name="firstName" label="First name" />
-            <FormInput required name="lastName" label="Last name" />
-            <FormInput required name="address1" label="Address line 1" />
+            <FormInput required name="firstName" label="Họ" />
+            <FormInput required name="lastName" label="Tên" />
+            <FormInput required name="address1" label="Địa chỉ" />
             <FormInput required name="email" label="Email" />
-            <FormInput required name="city" label="City" />
+            <FormInput required name="city" label="Tỉnh/ Thành" />
             <FormInput required name="zip" label="Zip / Postal code" />
             <Grid item xs={12} sm={6}>
-              <InputLabel>Shipping Country</InputLabel>
+              <InputLabel>Quốc gia</InputLabel>
               <Select
                 value={shippingCountry}
                 fullWidth
@@ -113,7 +113,7 @@ const AddressForm = ({ checkoutToken, next }) => {
               </Select>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <InputLabel>Shipping Subdivision</InputLabel>
+              <InputLabel>Tỉnh/ Thành</InputLabel>
               <Select
                 value={shippingSubdivision}
                 fullWidth
@@ -132,7 +132,7 @@ const AddressForm = ({ checkoutToken, next }) => {
               </Select>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <InputLabel>Shipping Options</InputLabel>
+              <InputLabel>Đơn vị giao hàng</InputLabel>
               <Select
                 value={shippingOption}
                 fullWidth
@@ -154,10 +154,10 @@ const AddressForm = ({ checkoutToken, next }) => {
           <br />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Button component={Link} to="/cart" variant="outlined">
-              Back To Cart
+              Trở về
             </Button>
             <Button type="submit" variant="contained">
-              Next
+              Tiếp tục
             </Button>
           </div>
         </form>

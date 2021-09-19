@@ -12,7 +12,7 @@ const Review = ({ checkoutToken }) => {
           <ListItem key={product.id} style={{ padding: "10px 0" }}>
             <ListItemText
               primary={product.name}
-              secondary={`Quantity: ${product.quantity}`}
+              secondary={`Số lượng: ${product.quantity}`}
             />
             <Typography variant="body2">
               {product.line_total.formatted_with_symbol}
@@ -21,7 +21,10 @@ const Review = ({ checkoutToken }) => {
         ))}
         <ListItem style={{ padding: "10px 0" }}>
           <ListItemText primary="Tổng cộng" />
-          <Typography variant="subtitle1" style={{ fontWeight: "700" }}>
+          <Typography
+            variant="subtitle1"
+            style={{ fontWeight: "700", color: "red" }}
+          >
             {checkoutToken.live.subtotal.formatted_with_symbol}
           </Typography>
         </ListItem>

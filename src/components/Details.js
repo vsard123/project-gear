@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouteMatch } from "react-router";
 import { commerce } from "../utils/commerce";
 import BreadCrumbs from "./Bread_Crumb";
-import { Container, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import ReactHtmlParser from "react-html-parser";
 import Loading from "./Loading";
 import ProductRelated from "./ProductRelated";
@@ -44,7 +44,7 @@ const Details = () => {
   return (
     <>
       {Object.keys(product).length > 0 ? (
-        <Container maxWidth="lg" className="my-5">
+        <div className="my-5 detail-page">
           <Typography variant="h4" color="initial">
             {product.name}
           </Typography>
@@ -59,13 +59,13 @@ const Details = () => {
                     showIndicators={false}
                   >
                     {product.assets.map((image) => (
-                      <div>
+                      <div key={image.id}>
                         <img src={image.url} alt="Hình sản phẩm" />
                       </div>
                     ))}
                   </Carousel>
                 </div>
-                <div className="col-md-5 mt-1 pl-4 pl-sm-0">
+                <div className="col-md-5 mt-1 ">
                   <h1 className="text-capitalize fs-largest title-product">
                     {product.name}
                   </h1>
@@ -82,7 +82,7 @@ const Details = () => {
 
                   <button
                     type="button"
-                    className="btn btn-danger d-block mt-3 px-5 py-2 w-100"
+                    className="btn btn-danger d-block my-3 px-5 py-2 w-100"
                     onClick={() => handleAddCart(product.id, 1)}
                   >
                     Đặt hàng
@@ -127,9 +127,11 @@ const Details = () => {
             <div className="other_product">
               <div className="product-category">
                 <div className="title-category d-flex justify-content-between align-items-center">
-                  <div className="title fs-largest">Sản phẩm tương tự</div>
+                  <Typography variant="h5" className="title mt-3">
+                    Sản phẩm tương tự
+                  </Typography>
                 </div>
-                <div className="products py-3">
+                <div className="products py-0">
                   {product.related_products.map((product) => (
                     <ProductRelated
                       key={product.id}
@@ -141,7 +143,7 @@ const Details = () => {
               </div>
             </div>
           )}
-        </Container>
+        </div>
       ) : (
         <Loading />
       )}

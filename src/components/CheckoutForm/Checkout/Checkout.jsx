@@ -81,13 +81,14 @@ const Checkout = () => {
     order.customer ? (
       <>
         <div>
-          <Typography variant="h5">
+          <Typography variant="h5">Hoàn tất đơn hàng!</Typography>
+          <Typography variant="h6">
             Cảm ơn bạn đã mua hàng, {order.customer.firstname}
             {order.customer.lastname}
           </Typography>
           <Divider className={classes.divider} />
           <Typography variant="subtitle2">
-            Order Ref: {order.customer_reference}
+            Mã đơn hàng: {order.customer_reference}
           </Typography>
           <br />
           <Button component={Link} to="/" variant="outlined" type="button">
@@ -98,7 +99,8 @@ const Checkout = () => {
     ) : isFinished ? (
       <>
         <div>
-          <Typography variant="h5">Cảm ơn bạn đã mua hàng</Typography>
+          <Typography variant="h5">Hoàn tất đơn hàng!</Typography>
+          <Typography variant="h6">Cảm ơn bạn đã mua hàng</Typography>
           <Divider className={classes.divider} />
           <br />
           <Button component={Link} to="/" variant="outlined" type="button">
@@ -113,10 +115,10 @@ const Checkout = () => {
     );
   if (errorMessage) {
     <>
-      <Typography variant="h5">Error: {errorMessage}</Typography>
+      <Typography variant="h5">Lỗi: {errorMessage}</Typography>
       <br />
       <Button component={Link} to="/" variant="outlined" type="button">
-        Back to home
+        Trở về trang chủ
       </Button>
     </>;
   }

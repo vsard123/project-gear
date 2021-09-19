@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
-import { alpha, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
@@ -14,6 +12,7 @@ import DrawerMenu from "./DrawerMenu";
 
 import { DataContext } from "../store/GlobalState";
 import { Divider, Drawer, Hidden } from "@material-ui/core";
+import Search from "./Search";
 
 const drawerWidth = 240;
 
@@ -32,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      marginRight: theme.spacing(0),
+    },
   },
   title: {
     display: "none",
@@ -43,56 +45,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     padding: "0 0 0 0",
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.8),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.5),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.down("sm")]: {
-      marginRight: 0,
-    },
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-    // borderRadius: "10px",
-    boxShadow:
-      " rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;",
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "000",
-  },
-  //   menuButton: {
-  //     marginRight: theme.spacing(2),
-  //     [theme.breakpoints.down("md")]: {
-  //       marginRight: 0,
-  //     },
-  //   },
-  inputRoot: {},
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "40ch",
-    },
-  },
+
   sectionDesktop: {
-    display: "none",
+    display: "flex",
     [theme.breakpoints.up("md")]: {
       display: "flex",
     },
@@ -101,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     [theme.breakpoints.up("md")]: {
       display: "none",
+    },
+  },
+  wrapper: {
+    [theme.breakpoints.down("md")]: {
+      padding: "0",
     },
   },
 }));
@@ -135,7 +95,7 @@ export default function Navbar(props) {
         color="default"
         style={{ boxShadow: "none", border: "1px solid #ddd" }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" className={classes.wrapper}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -150,30 +110,17 @@ export default function Navbar(props) {
             <Link to="/">
               <img
                 className="logo"
-                src="https://res.cloudinary.com/mctgear/image/upload/v1629738673/logo_banner/Logo_500x230_px_spwyon.png"
+                src="https://res.cloudinary.com/mctgear/image/upload/v1632047808/logo_banner/Logo_500x230_NEW_enpjpn.png"
                 alt="logo"
               />
             </Link>
-            {/* Search */}
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
+            <Search />
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <Link to="/gio-hang">
                 <IconButton
-                  aria-label="show 17 new notifications"
-                  style={{ color: "#444", borderRadius: "10px" }}
+                  aria-label="show 17 new notifications pr-0"
+                  style={{ color: "#000", borderRadius: "10px" }}
                 >
                   <Badge
                     badgeContent={cart.total_items}
@@ -181,7 +128,7 @@ export default function Navbar(props) {
                     style={{ alignItems: "center" }}
                   >
                     <span
-                      className="pr-2"
+                      className="pr-2 d-none d-lg-block"
                       style={{ fontSize: "14px", fontWeight: "bold" }}
                     >
                       Giỏ hàng

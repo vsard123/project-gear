@@ -1,6 +1,6 @@
 import React from "react";
 import Review from "./Review";
-import { Button, Divider, Typography } from "@material-ui/core";
+import { Button, Divider } from "@material-ui/core";
 
 const PaymentForm = ({
   checkoutToken,
@@ -65,17 +65,17 @@ const PaymentForm = ({
     <>
       <Review checkoutToken={checkoutToken} />
       <Divider />
-      <Typography variant="h6" gutterBottom style={{ margin: "20px 0" }}>
+      {/* <Typography variant="h6" gutterBottom style={{ margin: "20px 0" }}>
         Payment Method
-      </Typography>
+      </Typography> */}
       <form onSubmit={(e) => handleSubmit(e)}>
         <br />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Button variant="outlined" onClick={backStep}>
-            Back
+            Quay lại
           </Button>
           <Button type="submit" variant="contained" color="primary">
-            Pay {checkoutToken.live.subtotal.formatted_with_symbol}
+            Hoàn tất
           </Button>
         </div>
       </form>

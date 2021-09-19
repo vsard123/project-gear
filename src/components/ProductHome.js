@@ -1,14 +1,15 @@
-import { Skeleton } from "@material-ui/lab";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { commerce } from "../utils/commerce";
+import { isPersistedState } from "../utils/fetchData";
 import ProductItem from "./ProductItem";
+import SkeletonItem from "./Skeleton/SkeletonItem";
 
 const ProductHome = ({ category_id }) => {
   const [products, setProducts] = useState([]);
   const [cat, setCat] = useState({});
 
-  const fetchProductsCategory = async () => {
+  const fetchProductsCategory = useCallback(async () => {
     await commerce.categories
       .retrieve(category_id)
       .then((category) => setCat(category));
@@ -16,12 +17,25 @@ const ProductHome = ({ category_id }) => {
     await commerce.products
       .list({ limit: 4, category_id: category_id })
       .then((product) => setProducts(product.data));
-  };
+  }, [category_id]);
 
   useEffect(() => {
+    const sessionState = isPersistedState(category_id);
+    if (sessionState) {
+      console.log("Grabbing from session state");
+      setProducts(sessionState);
+      return;
+    }
+    console.log("Grabbing from API");
+    setProducts([]);
     fetchProductsCategory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category_id]);
+  }, [category_id, fetchProductsCategory]);
+
+  //write to sessionStore
+  useEffect(() => {
+    sessionStorage.setItem(category_id, JSON.stringify(products));
+  }, [category_id, products]);
   return (
     <div className="product-category">
       {cat && (
@@ -45,24 +59,7 @@ const ProductHome = ({ category_id }) => {
           ))}
         </div>
       ) : (
-        <div className="products py-3">
-          <div className="card">
-            <Skeleton variant="rectangular" width="100%" height={286} />
-            <Skeleton variant="text" />
-          </div>
-          <div className="card">
-            <Skeleton variant="rectangular" width={286} height={286} />
-            <Skeleton variant="text" />
-          </div>
-          <div className="card">
-            <Skeleton variant="rectangular" width={286} height={286} />
-            <Skeleton variant="text" />
-          </div>
-          <div className="card">
-            <Skeleton variant="rectangular" width={286} height={286} />
-            <Skeleton variant="text" />
-          </div>
-        </div>
+        <SkeletonItem />
       )}
     </div>
   );

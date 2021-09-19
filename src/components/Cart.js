@@ -48,7 +48,7 @@ const Cart = () => {
           <Loading />
         ) : (
           <div className="row">
-            <div className="col-md-8 text-secondary table-responsive">
+            <div className="col-md-8 text-secondary table-responsive mb-3">
               <table className="table table-bordered table-cart">
                 <thead className="thead-dark">
                   <tr style={{ fontSize: "14px" }}>
@@ -75,6 +75,7 @@ const Cart = () => {
               <div className="card">
                 <div className="card-body">
                   <h5 className="card-title">Thanh toán</h5>
+                  <hr />
                   <div className="card-text d-flex justify-content-between align-items-center my-3">
                     <span>Tạm tinh:</span>
                     <span className="text-danger fs-largest">
@@ -84,13 +85,13 @@ const Cart = () => {
                   <Button
                     component={Link}
                     to="/thanh-toan"
-                    className="btn btn-info w-100 text-center"
+                    className="btn btn-info w-100 text-center text-capitalize"
                     size="large"
                     type="button"
                     variant="contained"
                     color="primary"
                   >
-                    Thanh Toán
+                    Thanh toán
                   </Button>
                 </div>
               </div>

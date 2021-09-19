@@ -169,7 +169,7 @@ img {
 
 .product-home .product-category .title-category {
   color: #fff;
-  background: #cb4346;
+  background: seagreen;
   padding: 1rem;
   border-radius: 8px;
 }
@@ -217,7 +217,7 @@ img {
 
 .sidebar .nav-link {
   background: #fff;
-  color: #555;
+  color: #000;
   font-size: 14px;
 }
 .sidebar .nav-link:hover {

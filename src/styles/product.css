@@ -85,6 +85,10 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
+.flip-card .front a,
+.flip-card .back a {
+  display: block;
+}
 .flip-card .back {
   transform: rotateY(180deg);
 }

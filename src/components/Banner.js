@@ -12,7 +12,7 @@ const Banner = () => {
   return (
     <section className="section-content py-5">
       <div className="row">
-        <aside className="col-lg-3	d-none d-sm-block">
+        <aside className="col-lg-3 d-none d-lg-block">
           <nav className="sidebar card box-shadow">
             <LevelOne categories={categories} />
           </nav>

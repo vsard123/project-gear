@@ -41,8 +41,8 @@ const CartItem = ({ item, handleRemoveFromCart, handleUpdateCart }) => {
         </button>
       </td>
       <td
-        className="align-middle fs-large"
-        style={{ minWidth: "100px", color: "red", fontWeight: "bold" }}
+        className="align-middle fs-large text-success"
+        style={{ minWidth: "100px", fontWeight: "bold" }}
       >
         {item.line_total.formatted_with_code}
       </td>
@@ -51,7 +51,7 @@ const CartItem = ({ item, handleRemoveFromCart, handleUpdateCart }) => {
         style={{ minWidth: "50px", cursor: "pointer" }}
       >
         <i
-          className="far fa-trash-alt text-danger"
+          className="far fa-trash-alt"
           aria-hidden="true"
           style={{ fontSize: "18px" }}
           data-toggle="modal"

@@ -75,7 +75,7 @@ const ProductItem = ({ product }) => {
         {/* <p className="card-text" title={product.description}>
             {product.description}
           </p> */}
-        <div className="row justify-content-between align-items-center mx-0 my-2">
+        <div className="row justify-content-between align-items-center mx-0 mb-2">
           <div className="price">
             <span className="d-block text-danger fs-largest">
               {product.price.formatted_with_code}

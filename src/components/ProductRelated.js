@@ -3,8 +3,21 @@ import IconButton from "@material-ui/core/IconButton";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    color: "#fff",
+    background: "mediumseagreen",
+    "&:hover": {
+      color: "#fff",
+      background: "darkgreen",
+    },
+  },
+}));
 
 const ProductRelated = ({ product, handleAddCart }) => {
+  const classes = useStyles();
   return (
     <div className="card align-content-center">
       <Link to={`/san-pham/${product.id}`}>
@@ -18,7 +31,7 @@ const ProductRelated = ({ product, handleAddCart }) => {
       <div className="card-body">
         <Link to={`/san-pham/${product.id}`}>
           <h6
-            className="card-title product-name text-capitalize"
+            className="card-title product-name text-capitalize mb-0"
             title={product.name}
           >
             {product.name}
@@ -36,7 +49,7 @@ const ProductRelated = ({ product, handleAddCart }) => {
           <IconButton
             color="primary"
             aria-label="add to shopping cart"
-            className="btn-add-cart"
+            className={classes.button}
             onClick={() => handleAddCart(product.id, 1)}
           >
             <AddShoppingCartIcon />
