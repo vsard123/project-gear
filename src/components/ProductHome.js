@@ -21,13 +21,17 @@ const ProductHome = ({ category_id }) => {
 
   useEffect(() => {
     const sessionState = isPersistedState(category_id);
-    if (sessionState) {
+    const sessionCate = isPersistedState(`${category_id}_cat`);
+
+    if (sessionState && sessionCate) {
       console.log("Grabbing from session state");
       setProducts(sessionState);
+      setCat(sessionCate);
       return;
     }
     console.log("Grabbing from API");
     setProducts([]);
+    setCat({});
     fetchProductsCategory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category_id, fetchProductsCategory]);
@@ -35,7 +39,8 @@ const ProductHome = ({ category_id }) => {
   //write to sessionStore
   useEffect(() => {
     sessionStorage.setItem(category_id, JSON.stringify(products));
-  }, [category_id, products]);
+    sessionStorage.setItem(`${category_id}_cat`, JSON.stringify(cat));
+  }, [category_id, products, cat]);
   return (
     <div className="product-category">
       {cat && (

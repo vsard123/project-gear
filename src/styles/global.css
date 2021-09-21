@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
 html,
 body {
   padding: 0;
@@ -20,6 +20,10 @@ a:hover {
 img {
   object-fit: cover;
   object-position: 0 30%;
+}
+
+section {
+  min-height: 300px;
 }
 
 .logo {

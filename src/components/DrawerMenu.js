@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { Typography } from "@material-ui/core";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { DataContext } from "../store/GlobalState";
@@ -9,6 +10,20 @@ const DrawerMenu = () => {
 
   return (
     <nav className="sidebar py-2 mb-4">
+      <div className="header-nav text-center">
+        {/* Logo */}
+        <Link to="/">
+          <img
+            className="logo"
+            src="https://res.cloudinary.com/mctgear/image/upload/v1632047808/logo_banner/Logo_500x230_NEW_enpjpn.png"
+            alt="logo"
+          />
+        </Link>
+      </div>
+      <Typography variant="display-1" className="my-2 d-block text-center">
+        Danh mục sản phẩm
+      </Typography>
+
       <ul className="nav flex-column" id="accordionExample">
         {categories.map((category) =>
           category.children.length === 0 ? (
@@ -17,10 +32,10 @@ const DrawerMenu = () => {
                 to={`/danh-muc/${category.slug}`}
                 className="nav-link d-flex justify-content-start"
               >
-                {category.icon && (
+                {category.assets && (
                   <img
                     style={{ width: "20px", marginRight: "10px" }}
-                    src={category.icon.url}
+                    src={category.assets[0].url}
                     alt={category.name}
                   />
                 )}
@@ -36,7 +51,7 @@ const DrawerMenu = () => {
                 aria-expanded="true"
                 aria-controls="collapseOne"
               >
-                {category.icon && (
+                {category.assets && (
                   <img
                     style={{ width: "20px", marginRight: "10px" }}
                     src={category.assets[0].url}
