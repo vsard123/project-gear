@@ -73,7 +73,7 @@ const AddressForm = ({ checkoutToken, next }) => {
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        Shipping Address
+        Thông tin giao hàng
       </Typography>
       <FormProvider {...methods}>
         <form
